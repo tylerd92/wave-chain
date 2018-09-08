@@ -8,7 +8,7 @@ const MESSAGE_TYPES = {
   clear_transactions: "CLEAR_TRANSACTIONS"
 };
 // How to run another instance of the servers
-//$ HTTP_PORT=3002 P2P_PORT=5003 PEERS=ws://localhost:5001,ws://localhost:5002 npm run dev
+//$ HTTP_PORT=3002 P2P_PORT=5002 PEERS=ws://localhost:5001 npm run dev
 
 class P2pServer {
   constructor(blockchain, transactionPool) {
