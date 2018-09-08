@@ -1,5 +1,5 @@
 const ChainUtil = require('../chain-util');
-const { MINING_REWARD } = require('../config');
+const { MINING_REWARD, TRANSACTION_FEE } = require('../config');
 
 class Transaction {
     constructor() {
@@ -28,7 +28,9 @@ class Transaction {
         return transaction;
     }
 
+    // Include transaction fee in sender amount
     static newTransaction(senderWallet, recipient, amount) {
+
         if(amount > senderWallet.balance) {
             console.log(`Amount: ${amount} exceeds balance.`);
             return;
