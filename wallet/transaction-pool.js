@@ -1,4 +1,5 @@
 const Transaction = require('./transaction');
+const { TRANSACTION_FEE } = require('../config');
 
 class TransactionPool {
     constructor() {
@@ -23,8 +24,8 @@ class TransactionPool {
             const outputTotal = transaction.outputs.reduce((total, output) => {
                 return total + output.amount;
             }, 0);
-
-            if (transaction.input.amount !== outputTotal) {
+            
+            if (transaction.input.amount !== (outputTotal + TRANSACTION_FEE)) {
                 console.log(`Invalid transaction from ${transaction.input.address}.`);
                 return;
             }

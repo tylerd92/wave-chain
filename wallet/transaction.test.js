@@ -1,6 +1,6 @@
 const Transaction = require('./transaction');
 const Wallet = require('./index');
-const { MINING_REWARD } = require('../config');
+const { MINING_REWARD, TRANSACTION_FEE } = require('../config');
 
 describe('Transaction', () => {
     let transaction, wallet, recipient, amount;
@@ -14,7 +14,7 @@ describe('Transaction', () => {
 
     it('should output the `amount` subtracted from the wallet balance', () => {
         expect(transaction.outputs.find(output => output.address === wallet.publicKey).amount)
-            .toEqual(wallet.balance - amount);
+            .toEqual(wallet.balance - (amount + TRANSACTION_FEE));
     });
 
     it('should output the `amount` added to the recipient', () => {
@@ -57,7 +57,7 @@ describe('Transaction', () => {
 
         it(`should subtract the next amount from the sender's output`, () => {
             expect(transaction.outputs.find(output => output.address === wallet.publicKey).amount)
-                .toEqual(wallet.balance - amount - nextAmount);
+                .toEqual(wallet.balance - amount - nextAmount - TRANSACTION_FEE);
         });
 
         it('should output an amount for the next recipient', () => {
@@ -73,7 +73,7 @@ describe('Transaction', () => {
 
         it(`should reward the miner's wallet`, () => {
             expect(transaction.outputs.find(output => output.address === wallet.publicKey).amount)
-                .toEqual(MINING_REWARD);
+                .toEqual(MINING_REWARD + TRANSACTION_FEE);
         });
     });
 });
